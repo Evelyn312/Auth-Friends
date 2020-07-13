@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 
+import axios from "axios";
+
 
 const LogIn = () => {
 
@@ -16,13 +18,22 @@ const LogIn = () => {
         })
     }
 
-    const SignIn = e => {
+    const LogIn = e => {
         e.preventDefault();
-        console.log("signInTest")
+        console.log("signInTest", credentials)
+        //make post req and sent to api
+        axios
+        .post("http://localhost:5000/api/login", credentials)
+        .then(res => {
+            console.log("testRes", res)
+        })
+        .catch(err => console.log({err}))
+
+
     }
     return(
         <div>
-            <form onSubmit={SignIn}>
+            <form onSubmit={LogIn}>
                 <label htmlFor="username">
                     <input 
                         name="username"
