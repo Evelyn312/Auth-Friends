@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 
-import axios from "axios";
+import {axiosWithAuth} from "../utils/axiosWithAuth";
 
 
-const LogIn = () => {
+const LogIn = (props) => {
 
     const [credentials, setCredentials] = useState({
         username: "",
@@ -22,10 +22,12 @@ const LogIn = () => {
         e.preventDefault();
         console.log("signInTest", credentials)
         //make post req and sent to api
-        axios
-        .post("http://localhost:5000/api/login", credentials)
+        axiosWithAuth()
+        .post("/api/login", credentials)
         .then(res => {
             console.log("testRes", res)
+            window.localStorage.setItem("token", res.data.payload);
+            props.history.push("/friends");
         })
         .catch(err => console.log({err}))
 
